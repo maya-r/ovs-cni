@@ -15,7 +15,7 @@ export PATH := $(GOBIN):$(PATH):$(BIN_DIR)
 GOPATH = $(CURDIR)/.gopath
 ORG_PATH = github.com/k8snetworkplumbingwg
 PACKAGE = ovs-cni
-OCI_BIN ?= $(shell if podman ps >/dev/null 2>&1; then echo podman; elif docker ps >/dev/null 2>&1; then echo docker; fi)
+OCI_BIN ?= $(shell if docker ps >/dev/null 2>&1; then echo docker; elif podman ps >/dev/null 2>&1; then echo podman; fi)
 REPO_PATH = $(ORG_PATH)/$(PACKAGE)
 BASE = $(GOPATH)/src/$(REPO_PATH)
 PKGS = $(or $(PKG),$(shell cd $(BASE) && env GOPATH=$(GOPATH) $(GO) list ./... | grep -v "$(PACKAGE)/vendor/" | grep -v "$(PACKAGE)/tests/cluster" | grep -v "$(PACKAGE)/tests/node"))
